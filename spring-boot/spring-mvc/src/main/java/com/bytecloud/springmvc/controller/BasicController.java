@@ -4,21 +4,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @Controller
-@RequestMapping("/greeting")
-public class GreetingController {
-	
+public class BasicController {
+	 
 	
 	/**
 	 *  Attach return value to web response, @ResponseBody is mandatory to get the direct response at browser
 	 *  
 	 * @return  
-	 */
-	@GetMapping(value = "/hi")
-	@ResponseBody
-	public String sayHi() { 		
-		return "Hi";
+	 */ 
+	@GetMapping(value = "/")
+	public String index() {
+		
+		return "index";		
 	}
 	
 	/**
@@ -26,9 +26,10 @@ public class GreetingController {
 	 * @return
 	 */
 	@GetMapping(value = "/hello")
-	public String sayHello() { 		
-		return "h";
-	}
+	@ResponseBody
+	public String sayHello() {
+		return "<h2>Hello, World!!!</h2>";
+	}  
 	
   
 }

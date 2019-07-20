@@ -29,14 +29,10 @@ public class UserService {
 	//authenticate
 	public User authenticate(String username, String password) {
 
-		System.out.println("Request recieved for: "+username+"/"+password);
-		if(username==null) return null;
-		
 		User _user = null;
 		for (User user : users) {
 			if(user.getUsername().equals(username) && user.getPassword().equals(password)) {
 				_user = user;
-				System.out.println("User matched");
 				break;
 			}
 		}
@@ -44,9 +40,7 @@ public class UserService {
 		if (_user == null)
 			throw new RuntimeException("Authentication:: User not found");
 		return _user;
-		
 	}
-	
 	
 	public User retrieveById(int id) {
 

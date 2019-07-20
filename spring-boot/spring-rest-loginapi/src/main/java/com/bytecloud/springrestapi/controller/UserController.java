@@ -3,6 +3,7 @@ package com.bytecloud.springrestapi.controller;
 import java.net.URI;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,41 +12,51 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.bytecloud.springrestapi.bean.User;
 import com.bytecloud.springrestapi.bean.UserNotFoundException;
 import com.bytecloud.springrestapi.service.UserService;
+import com.google.common.net.HttpHeaders;
 
 import io.swagger.annotations.ApiOperation;
 
 @RestController()
 @RequestMapping("/api")
-@CrossOrigin("http://localhost:4200") //In case if you call service from Angular's default port
+@CrossOrigin(origins="*") //In case if you call service from Angular's default port
 public class UserController {
 
 	@Autowired
 	private UserService userService;
 
+
 	@GetMapping("/users")
-	public List<User> all() {
+	public List<User> all() { 
 		return userService.all();
-	}
+	} 
 
 	@PostMapping(path = "/users/authenticate")
-	public User authenticate(String username, String password) {
-
+	public User authenticate(@RequestBody User u) {
+		 
+		String username = u.getUsername();
+		String password = u.getPassword();
+		
+		if(username == null || password == null)
+			throw new UserNotFoundException("Parameters are null");
+		
 		User user = userService.authenticate(username, password);
 		if (user == null) {
 			throw new UserNotFoundException("User Not Found");
-		}
+		} 
 		return user;
 	}
 

@@ -26,7 +26,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.bytecloud.springrestapi.bean.User;
 import com.bytecloud.springrestapi.bean.UserNotFoundException;
 import com.bytecloud.springrestapi.service.UserService;
-import com.google.common.net.HttpHeaders;
+
 
 import io.swagger.annotations.ApiOperation;
 
